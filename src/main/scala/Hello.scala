@@ -9,7 +9,7 @@ object Hello extends IOApp {
 
   val routes = HttpRoutes.of[IO] {
     case GET -> Root =>
-      Ok("Hello from EC2! Amar is AWS DevOps Engineer learning Harness!")
+      Ok("Amar can make anythign and he is AWS DevOps Engineer,now learning Harness!")
 
     case GET -> Root / "health" =>
       Ok("App is running!")
