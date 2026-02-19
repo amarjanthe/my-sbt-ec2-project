@@ -1,13 +1,10 @@
 name: CI-CD Harness
-
 on:
   push:
     branches: [ "main" ]
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,6 +17,9 @@ jobs:
 
       - name: Install sbt
         run: |
+          echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | sudo tee /etc/apt/sources.list.d/sbt.list
+          echo "deb https://repo.scala-sbt.org/scalasbt/debian /" | sudo tee /etc/apt/sources.list.d/sbt_old.list
+          curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
           sudo apt-get update
           sudo apt-get install -y sbt
 
@@ -37,16 +37,14 @@ jobs:
         run: |
           echo "$EC2_KEY" > ec2_key.pem
           chmod 600 ec2_key.pem
-
           scp -i ec2_key.pem -o StrictHostKeyChecking=no \
             target/universal/*.zip \
             $EC2_USER@$EC2_HOST:/home/$EC2_USER/app.zip
-
           ssh -i ec2_key.pem -o StrictHostKeyChecking=no \
             $EC2_USER@$EC2_HOST << 'EOF'
               pkill -f my-sbt-project || true
               rm -rf ~/app
               mkdir ~/app
               unzip ~/app.zip -d ~/app
-              nohup ~/app/my-sbt-project-0.1.0/bin/my-sbt-project > app.log 2>&1 &
+              nohup ~/app/my-sbt-project-0.1.0/bin/my-sbt-project > ~/app.log 2>&1 &
             EOF
