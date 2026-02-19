@@ -40,11 +40,9 @@ jobs:
           scp -i ec2_key.pem -o StrictHostKeyChecking=no \
             target/universal/*.zip \
             $EC2_USER@$EC2_HOST:/home/$EC2_USER/app.zip
-          ssh -i ec2_key.pem -o StrictHostKeyChecking=no \
-            $EC2_USER@$EC2_HOST << 'EOF'
-              pkill -f my-sbt-project || true
-              rm -rf ~/app
-              mkdir ~/app
-              unzip ~/app.zip -d ~/app
-              nohup ~/app/my-sbt-project-0.1.0/bin/my-sbt-project > ~/app.log 2>&1 &
-            EOF
+          ssh -i ec2_key.pem -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST \
+            "pkill -f my-sbt-project || true && \
+             rm -rf ~/app && \
+             mkdir ~/app && \
+             unzip ~/app.zip -d ~/app && \
+             nohup ~/app/my-sbt-project-0.1.0/bin/my-sbt-project > ~/app.log 2>&1 &"
