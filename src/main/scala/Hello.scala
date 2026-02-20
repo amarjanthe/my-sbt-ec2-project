@@ -12,7 +12,7 @@ object Hello extends IOApp {
       Ok("Amar can make anythign and he is AWS DevOps Engineer,now learning Harness, idid at@12 the pipeline is working")
 
     case GET -> Root / "health" =>
-      Ok("App is running!")
+      Ok("App is running and now it is live")
   }
 
   def run(args: List[String]): IO[ExitCode] =
