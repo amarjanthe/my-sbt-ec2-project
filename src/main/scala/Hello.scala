@@ -6,7 +6,7 @@ object Hello extends App {
   val server = HttpServer.create(new InetSocketAddress(9000), 0)
 
   server.createContext("/", exchange => {
-    val response = "Hello from EKS Kubernetes CICD using harness i did project Aj will anything"
+    val response = "Hello from EKS Kubernetes CICD using harness i did project AJ BOSS will anything"
     exchange.sendResponseHeaders(200, response.length)
     val os = exchange.getResponseBody
     os.write(response.getBytes)
