@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: my-sbt-container
-          image: <+artifacts.primary.image>
+          image: 065504275232.dkr.ecr.ap-south-1.amazonaws.com/my-sbt-project:9
           ports:
             - containerPort: 9000
