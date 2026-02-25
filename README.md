@@ -1,3 +1,2 @@
 # my-sbt-ec2-project
-adeeddd
-oooooo
+added trigeeeeer trigge 
